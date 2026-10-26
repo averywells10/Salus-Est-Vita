@@ -45,7 +45,7 @@ Salus est Vita is a free website for tracking workouts and food in one place. Us
 ## Team
 
 - Avery Wells
-- [Teammate's name]
+- Maya Argov
 
 ## Disclaimer
 
