@@ -1,0 +1,129 @@
+:root {
+    --green: #2e8b57;
+    --light-green: #e8f5ee;
+    --text: #1e2a24;
+}
+/* :root holds VARIABLES: names saved for colors. Anywhere below that says
+   var(--green) uses #2e8b57. Change a color here and it changes across the whole site. */
+
+* {
+    box-sizing: border-box;
+}
+/* * means "every element". border-box makes widths include padding,
+   so boxes don't end up wider than you expect. Almost every site uses this. */
+
+body {
+    margin: 0;                              /* removes the browser's default white gap around the page */
+    font-family: Arial, sans-serif;         /* the font; sans-serif is the backup if Arial is missing */
+    color: var(--text);                     /* default text color (dark green-gray) */
+    background-color: var(--light-green);   /* page background color */
+}
+
+/* ===== Header and tabs ===== */
+
+.site-header {
+    display: flex;                   /* lines up the logo, button, and tabs in a ROW */
+    justify-content: space-between;  /* pushes the logo to the left and the tabs to the right */
+    align-items: center;             /* centers them vertically */
+    padding: 15px 20px;              /* space inside the bar: 15px top/bottom, 20px left/right */
+    background-color: white;         /* white top bar */
+    position: relative;              /* lets the phone menu position itself right under the header */
+}
+
+.logo {
+    font-size: 1.4rem;        /* 1.4 times the normal text size */
+    font-weight: bold;        /* bold text */
+    color: var(--green);      /* green logo */
+    text-decoration: none;    /* removes the underline links have by default */
+}
+
+.nav-links {
+    display: flex;   /* puts the tabs in a row */
+    gap: 20px;       /* space between each tab */
+}
+
+.nav-links a {
+    color: var(--text);       /* tab text color */
+    text-decoration: none;    /* no underline */
+    font-weight: bold;
+}
+/* ".nav-links a" means "links INSIDE .nav-links". A space between selectors means "inside". */
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--green);
+}
+/* :hover = when the mouse is over a tab. .active = the tab for the current page
+   (JavaScript adds this class). Both turn green. The comma means "apply to both". */
+
+.menu-button {
+    display: none;        /* HIDES the ☰ button on laptops */
+    font-size: 1.6rem;    /* makes the ☰ symbol bigger */
+    background: none;     /* removes the default gray button background */
+    border: none;         /* removes the button border */
+    cursor: pointer;      /* shows the hand cursor on hover */
+}
+
+/* ===== Page content ===== */
+
+main {
+    max-width: 1000px;   /* content never gets wider than 1000px, so it's easy to read on big screens */
+    margin: 0 auto;      /* auto left/right margins CENTER the content */
+    padding: 20px;       /* space inside, so text doesn't touch the edges */
+}
+
+h1 {
+    color: var(--green);   /* green main headings */
+}
+
+.card-grid {
+    display: grid;                   /* grid layout for the cards */
+    grid-template-columns: 1fr 1fr;  /* TWO equal columns (1fr = one equal share of the space) */
+    gap: 20px;                       /* space between the cards */
+}
+
+.card {
+    display: block;            /* makes the link-cards act like full boxes */
+    background-color: white;   /* white card */
+    padding: 20px;             /* space inside the card */
+    border-radius: 10px;       /* rounded corners */
+    margin-bottom: 20px;       /* space under each card */
+    color: var(--text);        /* keeps card text dark instead of link-blue */
+    text-decoration: none;     /* no underline on card text */
+}
+
+footer {
+    text-align: center;   /* centers the footer text */
+    padding: 20px;
+}
+
+/* ===== Phone screens ===== */
+
+@media (max-width: 700px) {
+/* A MEDIA QUERY: everything inside these braces ONLY applies when the screen is
+   700px wide or less (phones). On bigger screens, this whole block is ignored.
+   This is what makes the site switch layouts. */
+
+    .menu-button {
+        display: block;   /* SHOWS the ☰ button on phones */
+    }
+
+    .nav-links {
+        display: none;            /* HIDES the tabs until the button is tapped */
+        flex-direction: column;   /* when shown, stacks the tabs top to bottom */
+        position: absolute;       /* floats the menu over the page... */
+        top: 100%;                /* ...starting right below the header */
+        left: 0;                  /* stretches from the left edge... */
+        right: 0;                 /* ...to the right edge */
+        background-color: white;
+        padding: 10px 20px;
+    }
+
+    .nav-links.open {
+        display: flex;   /* when JavaScript adds the "open" class, the menu appears */
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;   /* ONE column on phones, so the cards stack */
+    }
+}
