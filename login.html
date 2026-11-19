@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | Salus est Vita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ===== HEADER (no Log In button here, since you're already on the login page) ===== -->
+    <header class="site-header">
+        <div class="header-top">
+            <a href="index.html" class="logo">SALUS</a>
+            <div class="header-right">
+                <span class="motto">Salus est Vita</span>
+            </div>
+        </div>
+        <nav class="tool-tabs" aria-label="Tools">
+            <a href="workouts.html" class="tool-tab">
+                <span class="tool-name">MARS</span>
+                <span class="tool-sub">Train</span>
+            </a>
+            <a href="food.html" class="tool-tab">
+                <span class="tool-name">CERES</span>
+                <span class="tool-sub">Nourish</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="card auth-card">
+            <!-- "auth-card" = a narrow, centered box for the form ("auth" is short for authentication). -->
+
+            <h1 id="auth-title">Log In</h1>
+            <!-- JavaScript switches this between "Log In" and "Sign Up". -->
+
+            <form id="auth-form">
+                <!-- The form. JavaScript listens for it to be submitted. -->
+
+                <label for="email">Email</label>
+                <!-- for="email" connects this label to the input with id="email".
+                     Clicking the label puts the cursor in the box. -->
+                <input type="email" id="email" required>
+                <!-- type="email" checks it looks like an email. "required" means it can't be empty. -->
+
+                <label for="password">Password</label>
+                <input type="password" id="password" minlength="6" required>
+                <!-- type="password" hides the characters. minlength="6" matches Supabase's minimum. -->
+
+                <button type="submit" id="auth-button" class="btn btn-gold btn-full" style="margin-top: 18px;">Log In</button>
+                <!-- type="submit" sends the form (clicking it or pressing Enter). -->
+            </form>
+
+            <p id="auth-message" aria-live="polite"></p>
+            <!-- Empty spot for messages like "Please wait..." or errors.
+                 aria-live makes screen readers announce new messages. -->
+
+            <button type="button" id="switch-mode" class="link-button">Need an account? Sign up</button>
+            <!-- Looks like a link. Switches the form between Log In and Sign Up. -->
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Salus est Vita · Not medical advice</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

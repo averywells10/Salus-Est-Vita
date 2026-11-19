@@ -1,38 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Salus est Vita</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header class="site-header">
-        <a href="index.html" class="logo">Salus est Vita</a>
-        <button class="menu-button" id="menu-button">&#9776;</button>
-        <nav class="nav-links" id="nav-links">
-        <!-- <nav> holds the main navigation tabs. -->
+<!-- Tells the browser this is a modern HTML5 page. Always the first line. -->
 
-            <a href="index.html">Home</a>
-            <a href="workouts.html">Workouts</a>
-            <a href="food.html">Food</a>
-            <a href="login.html">Log In</a>
+<html lang="en">
+<!-- Starts the page. lang="en" means the page is in English (helps screen readers and search engines). -->
+
+<head>
+    <!-- HEAD: information ABOUT the page. Nothing in here shows on screen. -->
+
+    <meta charset="UTF-8">
+    <!-- Lets the page show every letter and symbol correctly, like © and ·. -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Makes phones use their real screen width. Without this, the phone layout won't work. -->
+
+    <title>Salus est Vita | Workout and Food Tracker</title>
+    <!-- The text on the browser tab. -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Starts connecting to Google Fonts early so the fonts load faster. -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Loads two fonts: Cinzel (Roman capitals for SALUS, MARS, CERES)
+         and DM Sans (everything else). The numbers are the weights: 400 normal, 700 bold. -->
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Connects this page to style.css, where all the colors and layout live. -->
+</head>
+
+<body>
+    <!-- BODY: everything people actually SEE. No page class here, so the home page uses the default blue accent. -->
+
+    <!-- ===== HEADER: the dark blue band at the top (same on every page) ===== -->
+    <header class="site-header">
+
+        <div class="header-top">
+            <!-- The top row: logo on the left, motto and login on the right. -->
+
+            <a href="index.html" class="logo">SALUS</a>
+            <!-- The logo is a link, so clicking it always goes home. -->
+
+            <div class="header-right">
+                <span class="motto">Salus est Vita</span>
+                <!-- The motto. CSS hides it on phones to save space. -->
+
+                <nav class="nav-links"><a href="login.html">Log In</a></nav>
+                <!-- The login button. script.js changes it to "Log Out" when someone is logged in. -->
+            </div>
+        </div>
+
+        <!-- ===== FOLDER TABS: switch between the two tools ===== -->
+        <nav class="tool-tabs" aria-label="Tools">
+            <!-- aria-label names this menu for screen readers. -->
+
+            <a href="workouts.html" class="tool-tab">
+                <span class="tool-name">MARS</span>
+                <!-- The god's name, in Cinzel. -->
+                <span class="tool-sub">Train</span>
+                <!-- A plain word so everyone knows what Mars means. -->
+            </a>
+
+            <a href="food.html" class="tool-tab">
+                <span class="tool-name">CERES</span>
+                <span class="tool-sub">Nourish</span>
+            </a>
+            <!-- Neither tab has "active" on the home page, because you're not in either tool yet. -->
         </nav>
     </header>
 
-    <main>
-        <h1>Salus est Vita</h1>
-        <p>Health is life. Track your workouts and food in one place. (or some other tagline)</p>
-         <div class="card-grid">
-            <a href="workouts.html" class=""card">
-                <h2>Workouts</h2>
-                <p>Track your workouts and progress over time.</p>
+    <main class="container">
+        <!-- MAIN: the page's content. "container" keeps it centered with a max width. -->
+
+        <!-- ===== HERO: the big welcome box ===== -->
+        <section class="card" style="text-align: center; padding: 40px 20px;">
+            <!-- "card" = white box with rounded corners. The inline style centers the text and adds extra space. -->
+
+            <p class="salus-label">SALUS EST VITA · HEALTH IS LIFE</p>
+            <!-- Small Roman-style label in bronze. -->
+
+            <h1 style="font-size: 2.2rem;">Train and eat well, in one place.</h1>
+            <!-- The main headline. Each page should have one h1. -->
+
+            <p class="muted" style="max-width: 560px; margin: 12px auto 20px;">Log workouts in Mars and meals in Ceres. Free, no ads, and they work together.</p>
+            <!-- "muted" = gray text. max-width keeps the line from getting too long to read. -->
+
+            <a href="login.html" class="btn btn-gold">Get started</a>
+            <!-- A link styled as a gold button. "btn" sets the shape, "btn-gold" sets the color. -->
+        </section>
+
+        <!-- ===== THE TWO TOOLS: big cards that link to Mars and Ceres ===== -->
+        <div class="meal-grid">
+            <!-- "meal-grid" fits the cards side by side on laptops and stacks them on phones. -->
+
+            <a href="workouts.html" class="card card-blue" style="text-decoration: none;">
+                <!-- The whole card is a link. "card-blue" makes it blue. No underline on the text. -->
+                <p class="tool-name" style="color: var(--gold);">MARS</p>
+                <h2 style="margin: 6px 0;">Train</h2>
+                <p style="margin: 0;">Log sets, track your lifts, and see your week at a glance.</p>
             </a>
-            <a href="food.html" class=""card">
-                <h2>Food</h2>
-                <p>Log your meals and monitor your nutrition.</p>
+
+            <a href="food.html" class="card card-gold" style="text-decoration: none; color: var(--ink);">
+                <!-- "card-gold" makes it light gold. Text is dark ink so it's readable on gold. -->
+                <p class="tool-name" style="color: var(--bronze);">CERES</p>
+                <h2 style="margin: 6px 0;">Nourish</h2>
+                <p style="margin: 0;">Search real USDA food data and track calories, protein, carbs, and fat.</p>
             </a>
-         </div>
+        </div>
     </main>
+
+    <!-- ===== FOOTER: bottom of every page ===== -->
+    <footer class="site-footer">
+        <p>&copy; 2026 Salus est Vita · Not medical advice</p>
+        <!-- &copy; shows the © symbol. The health disclaimer is on every page. -->
+    </footer>
+
+    <!-- ===== SCRIPTS: loaded last so the page exists before the code runs ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 1. Supabase's code library. -->
+    <script src="supabase.js"></script>
+    <!-- 2. Your connection to your Supabase project (creates "db"). -->
+    <script src="script.js"></script>
+    <!-- 3. Your page code, which uses "db". This order matters. -->
 </body>
 </html>

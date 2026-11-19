@@ -1,129 +1,614 @@
-:root {
-    --green: #2e8b57;
-    --light-green: #e8f5ee;
-    --text: #1e2a24;
-}
-/* :root holds VARIABLES: names saved for colors. Anywhere below that says
-   var(--green) uses #2e8b57. Change a color here and it changes across the whole site. */
+/* =====================================================
+   SALUS EST VITA - STYLES
+   CSS pattern:  selector { property: value; }
+   .name  = elements with class="name"
+   #name  = the one element with id="name"
+   ===================================================== */
 
+
+/* ===== COLORS =====
+   :root holds VARIABLES: named colors used everywhere.
+   var(--gold) means "use the gold color."
+   Change a color here and the whole site updates. */
+:root {
+    --imperial: #16307A;   /* header band */
+    --lapis: #1D3F8F;      /* Mars, links, blue buttons */
+    --lapis-soft: #24408F; /* inactive tab in the header */
+    --sky: #E6EEFB;        /* light blue panels */
+    --marble: #F5F7FB;     /* page background */
+    --white: #FFFFFF;      /* cards */
+    --border: #DCE3EF;     /* card borders */
+    --gold: #F4C430;       /* Ceres, main action buttons */
+    --honey: #FFF4CF;      /* light gold panels */
+    --bronze: #7A5600;     /* gold-colored TEXT (gold itself is too light to read on white) */
+    --ink: #14213D;        /* main text */
+    --muted: #5B6680;      /* gray secondary text */
+
+    --accent: var(--lapis); /* the page's main color: blue by default */
+    --radius: 20px;         /* how rounded the boxes are */
+}
+
+/* On Ceres pages (body class="page-ceres"), the accent switches to gold.
+   Anything using var(--accent) changes color automatically. */
+body.page-ceres {
+    --accent: var(--gold);
+}
+
+
+/* ===== BASICS ===== */
+
+/* * = every element. border-box makes widths include padding,
+   so boxes are exactly the size you set. */
 * {
     box-sizing: border-box;
 }
-/* * means "every element". border-box makes widths include padding,
-   so boxes don't end up wider than you expect. Almost every site uses this. */
 
 body {
-    margin: 0;                              /* removes the browser's default white gap around the page */
-    font-family: Arial, sans-serif;         /* the font; sans-serif is the backup if Arial is missing */
-    color: var(--text);                     /* default text color (dark green-gray) */
-    background-color: var(--light-green);   /* page background color */
+    margin: 0;                                      /* removes the browser's default white gap */
+    font-family: "DM Sans", system-ui, sans-serif;  /* main font, with backups if it doesn't load */
+    color: var(--ink);                              /* default text color */
+    background: var(--marble);                      /* page background */
+    line-height: 1.5;                               /* space between lines, easier to read */
 }
 
-/* ===== Header and tabs ===== */
+/* Headings: tighter line spacing and no default margins */
+h1, h2, h3 {
+    line-height: 1.2;
+    margin: 0;
+}
 
+/* Default link color */
+a {
+    color: var(--lapis);
+}
+
+
+/* ===== HEADER BAND ===== */
 .site-header {
-    display: flex;                   /* lines up the logo, button, and tabs in a ROW */
-    justify-content: space-between;  /* pushes the logo to the left and the tabs to the right */
-    align-items: center;             /* centers them vertically */
-    padding: 15px 20px;              /* space inside the bar: 15px top/bottom, 20px left/right */
-    background-color: white;         /* white top bar */
-    position: relative;              /* lets the phone menu position itself right under the header */
+    background: var(--imperial);  /* dark blue band */
+    color: var(--white);
+    padding: 16px 24px 0;         /* top 16px, sides 24px, bottom 0 (so the tabs touch the page) */
+}
+
+/* The top row: logo left, login right */
+.header-top {
+    max-width: 1200px;              /* lines up with the page content below */
+    margin: 0 auto;                 /* centers it */
+    display: flex;                  /* puts the items in a ROW */
+    align-items: center;            /* centers them vertically */
+    justify-content: space-between; /* pushes the logo left and the login right */
+    gap: 16px;                      /* space between items */
 }
 
 .logo {
-    font-size: 1.4rem;        /* 1.4 times the normal text size */
-    font-weight: bold;        /* bold text */
-    color: var(--green);      /* green logo */
-    text-decoration: none;    /* removes the underline links have by default */
+    font-family: "Cinzel", serif;   /* Roman capitals */
+    font-size: 1.6rem;              /* rem = relative to normal text size (1.6x) */
+    font-weight: 700;               /* bold */
+    letter-spacing: 5px;            /* spreads the letters out, like carved stone */
+    color: var(--gold);
+    text-decoration: none;          /* removes the link underline */
 }
 
-.nav-links {
-    display: flex;   /* puts the tabs in a row */
-    gap: 20px;       /* space between each tab */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
+.motto {
+    color: #C9D6F2;   /* soft light blue, readable on the dark band */
+    font-size: 0.9rem;
+}
+
+/* The Log In / Log Out button (script.js changes its text) */
 .nav-links a {
-    color: var(--text);       /* tab text color */
-    text-decoration: none;    /* no underline */
-    font-weight: bold;
-}
-/* ".nav-links a" means "links INSIDE .nav-links". A space between selectors means "inside". */
-
-.nav-links a:hover,
-.nav-links a.active {
-    color: var(--green);
-}
-/* :hover = when the mouse is over a tab. .active = the tab for the current page
-   (JavaScript adds this class). Both turn green. The comma means "apply to both". */
-
-.menu-button {
-    display: none;        /* HIDES the ☰ button on laptops */
-    font-size: 1.6rem;    /* makes the ☰ symbol bigger */
-    background: none;     /* removes the default gray button background */
-    border: none;         /* removes the button border */
-    cursor: pointer;      /* shows the hand cursor on hover */
+    display: inline-block;   /* lets a link have padding like a button */
+    padding: 10px 18px;
+    border-radius: 999px;    /* a huge radius = fully round ends, a "pill" shape */
+    background: var(--gold);
+    color: var(--ink);       /* dark text on gold for contrast */
+    font-weight: 700;
+    text-decoration: none;
 }
 
-/* ===== Page content ===== */
 
-main {
-    max-width: 1000px;   /* content never gets wider than 1000px, so it's easy to read on big screens */
-    margin: 0 auto;      /* auto left/right margins CENTER the content */
-    padding: 20px;       /* space inside, so text doesn't touch the edges */
+/* ===== FOLDER TABS (Mars / Ceres) ===== */
+.tool-tabs {
+    max-width: 1200px;
+    margin: 16px auto 0;   /* 16px above, centered, nothing below */
+    display: flex;         /* tabs side by side */
+    gap: 6px;
 }
 
-h1 {
-    color: var(--green);   /* green main headings */
+.tool-tab {
+    display: flex;
+    flex-direction: column;              /* stacks the god's name above the plain word */
+    padding: 10px 28px 12px;
+    border-radius: 14px 14px 0 0;        /* rounds only the TOP corners = folder tab shape */
+    border-top: 4px solid transparent;   /* invisible top border, so active and inactive tabs are the same height */
+    background: var(--lapis-soft);
+    color: var(--white);
+    text-decoration: none;
 }
 
-.card-grid {
-    display: grid;                   /* grid layout for the cards */
-    grid-template-columns: 1fr 1fr;  /* TWO equal columns (1fr = one equal share of the space) */
-    gap: 20px;                       /* space between the cards */
+/* The open tab: same color as the page, so it looks attached, like a folder */
+.tool-tab.active {
+    background: var(--marble);
+    color: var(--ink);
+    border-top-color: var(--gold);   /* the invisible border turns gold */
 }
 
+/* The god's name */
+.tool-name {
+    font-family: "Cinzel", serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+/* Active tab name colors: blue on Mars... */
+.tool-tab.active .tool-name {
+    color: var(--lapis);
+}
+
+/* ...and bronze on Ceres */
+body.page-ceres .tool-tab.active .tool-name {
+    color: var(--bronze);
+}
+
+/* The plain word under the name (Train / Nourish) */
+.tool-sub {
+    font-size: 0.8rem;
+    color: #C9D6F2;
+}
+
+.tool-tab.active .tool-sub {
+    color: var(--muted);
+}
+
+
+/* ===== PAGE LAYOUT ===== */
+
+/* Centers the content and stacks sections with even spacing */
+.container {
+    max-width: 1200px;     /* never wider than 1200px, so it's easy to read on big screens */
+    margin: 0 auto;        /* centers it */
+    padding: 20px 24px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Two columns: the left takes the leftover space, the right is 340px wide */
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;  /* 1fr = "one share of the leftover space" */
+    gap: 20px;
+    align-items: start;    /* columns don't stretch to match each other's height */
+}
+
+/* Stacks boxes inside a column */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* ===== SECTION PILLS (Today, Plans...) ===== */
+.section-pills {
+    display: flex;
+    flex-wrap: wrap;   /* pills move to a new line if they don't fit */
+    gap: 8px;
+}
+
+.section-pills a {
+    padding: 8px 18px;
+    border-radius: 999px;   /* pill shape */
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+/* The current pill fills with the page's accent color (blue on Mars, gold on Ceres) */
+.section-pills a.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+    font-weight: 700;
+}
+
+/* On gold, white text is hard to read, so use dark text instead */
+body.page-ceres .section-pills a.active {
+    color: var(--ink);
+}
+
+
+/* ===== CARDS (the boxes) ===== */
+
+/* The basic box: white, thin border, rounded, with space inside */
 .card {
-    display: block;            /* makes the link-cards act like full boxes */
-    background-color: white;   /* white card */
-    padding: 20px;             /* space inside the card */
-    border-radius: 10px;       /* rounded corners */
-    margin-bottom: 20px;       /* space under each card */
-    color: var(--text);        /* keeps card text dark instead of link-blue */
-    text-decoration: none;     /* no underline on card text */
-}
-
-footer {
-    text-align: center;   /* centers the footer text */
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     padding: 20px;
 }
 
-/* ===== Phone screens ===== */
+/* Color versions. Use with "card", e.g. class="card card-blue" */
+.card-blue {
+    background: var(--lapis);
+    border-color: var(--lapis);
+    color: var(--white);
+}
 
-@media (max-width: 700px) {
-/* A MEDIA QUERY: everything inside these braces ONLY applies when the screen is
-   700px wide or less (phones). On bigger screens, this whole block is ignored.
-   This is what makes the site switch layouts. */
+.card-gold {
+    background: var(--honey);
+    border-color: var(--honey);
+}
 
-    .menu-button {
-        display: block;   /* SHOWS the ☰ button on phones */
+.card-sky {
+    background: var(--sky);
+    border-color: var(--sky);
+}
+
+/* Small gray capital label above a heading */
+.eyebrow {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;   /* makes it all capitals without retyping */
+}
+
+/* The Roman-style "SALUS SUGGESTS" label */
+.salus-label {
+    margin: 0 0 6px;
+    font-family: "Cinzel", serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--bronze);
+}
+
+/* Labels inside blue cards turn gold so they stand out */
+.card-blue .salus-label,
+.card-blue .eyebrow {
+    color: var(--gold);
+}
+
+/* Gray text */
+.muted {
+    color: var(--muted);
+}
+
+/* Dashed "nothing here yet" box */
+.placeholder {
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    color: var(--muted);
+    text-align: center;
+}
+
+
+/* ===== GRIDS ===== */
+
+/* 3 equal columns (set tiles, macros) */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));   /* repeat(3, ...) = 3 columns */
+    gap: 10px;
+}
+
+/* 4 equal columns (exercise route) */
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+/* A smart grid: fits as many columns as possible, each at least 230px wide.
+   4 meals in a row on a laptop, fewer on a tablet, 1 on a phone, automatically. */
+.meal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+
+/* ===== BUTTONS ===== */
+
+/* Shared button shape. Add a color class with it, e.g. class="btn btn-gold" */
+.btn {
+    display: inline-flex;
+    align-items: center;          /* centers the text vertically */
+    justify-content: center;      /* and horizontally */
+    min-height: 46px;             /* tall enough to tap easily on a phone */
+    padding: 0 20px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    font: 700 1rem "DM Sans", sans-serif;   /* shorthand: weight, size, font */
+    cursor: pointer;              /* hand cursor on hover */
+    text-decoration: none;        /* for links styled as buttons */
+}
+
+.btn-gold {
+    background: var(--gold);
+    color: var(--ink);
+}
+
+.btn-blue {
+    background: var(--lapis);
+    color: var(--white);
+}
+
+/* Outline button: border only, no fill */
+.btn-outline {
+    background: transparent;
+    border-color: var(--lapis);
+    color: var(--lapis);
+}
+
+/* Dashed button: "add something here" */
+.btn-dashed {
+    width: 100%;
+    background: transparent;
+    border: 2px dashed #9FB0D4;
+    color: var(--lapis);
+}
+
+/* Makes any button full width */
+.btn-full {
+    width: 100%;
+}
+
+
+/* ===== MARS PIECES ===== */
+
+/* The exercise route list: removes the default numbers and spacing */
+.route {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+}
+
+/* Each exercise: bar on top, name, then status, stacked */
+.route li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+}
+
+/* The thin bar above each exercise: gray by default */
+.route-bar {
+    height: 6px;
+    border-radius: 99px;
+    background: var(--border);
+}
+
+/* STATE CLASSES: JavaScript adds these, and CSS decides how they look */
+.route li.done .route-bar { background: var(--lapis); }   /* finished = blue */
+.route li.now .route-bar { background: var(--gold); }     /* current = gold */
+
+/* A set tile: dashed outline by default (not done yet) */
+.set-tile {
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px dashed #B7C3DB;
+}
+
+/* Finished set = solid blue */
+.set-tile.done {
+    background: var(--lapis);
+    border: 1px solid var(--lapis);
+    color: var(--white);
+}
+
+/* Current set = light gold with a gold border */
+.set-tile.now {
+    background: var(--honey);
+    border: 2px solid var(--gold);
+}
+
+.set-tile p { margin: 0; }
+.set-tile .set-label { font-size: 0.75rem; }                   /* "Set 1 · done" */
+.set-tile .set-value { font-size: 1.1rem; font-weight: 700; }  /* "40 × 10" */
+
+/* The - number + row */
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* The square - and + buttons */
+.stepper button {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    border: none;
+    background: var(--white);
+    color: var(--lapis);
+    font: 700 1.4rem "DM Sans", sans-serif;
+    cursor: pointer;
+}
+
+/* The number in the middle takes the leftover space and is centered */
+.stepper output {
+    flex: 1;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* The week view: 7 equal columns */
+.week {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 6px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* A day circle: light blue by default (no workout) */
+.day-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 4px;    /* centered, with a little space below */
+    border-radius: 999px;  /* fully round */
+    background: var(--sky);
+    color: var(--gold);    /* the check mark color */
+    font-weight: 700;
+}
+
+/* Trained that day = blue circle */
+.day-dot.done { background: var(--lapis); }
+
+
+/* ===== CERES PIECES ===== */
+
+/* The calorie bar's track (the empty part) */
+.bar {
+    height: 14px;
+    border-radius: 99px;
+    background: var(--sky);
+    overflow: hidden;   /* keeps the fill inside the rounded ends */
+}
+
+/* The filled part. JavaScript sets its width (0% to 100%) */
+.bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--gold);
+}
+
+/* A macro box (protein, carbs, fat) */
+.macro {
+    padding: 12px 14px;
+    border-radius: 14px;
+}
+
+.macro p { margin: 0; }
+
+/* One food in a meal list (used once foods are added) */
+.food-item {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--marble);
+}
+
+.food-item p { margin: 0; }
+
+/* The rounded search bar */
+.search-box {
+    width: 100%;
+    max-width: 380px;
+    height: 46px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid #B7C3DB;
+    background: var(--white);
+    font: 1rem "DM Sans", sans-serif;
+}
+
+/* Search results list: no bullets or spacing */
+#food-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* :empty = has nothing inside. Hidden until results are added */
+#food-results:empty {
+    display: none;
+}
+
+/* Hides text on screen but keeps it for screen readers (used on the search label) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+
+/* ===== LOGIN ===== */
+
+/* A narrow, centered box for the form */
+.auth-card {
+    max-width: 420px;
+    margin: 20px auto;
+}
+
+/* Each label sits on its own line above its input */
+.auth-card label {
+    display: block;
+    font-weight: 700;
+    margin: 14px 0 4px;
+}
+
+/* The email and password boxes */
+.auth-card input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #B7C3DB;
+    border-radius: 12px;
+    font: 1rem "DM Sans", sans-serif;
+}
+
+/* A button that looks like a link ("Need an account? Sign up") */
+.link-button {
+    background: none;
+    border: none;
+    color: var(--lapis);
+    padding: 10px 0;
+    font: 1rem "DM Sans", sans-serif;
+    cursor: pointer;
+}
+
+
+/* ===== FOOTER ===== */
+.site-footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+
+/* ===== TABLETS AND PHONES =====
+   @media rules only apply when the screen is narrow enough.
+   On bigger screens, everything inside is ignored. */
+
+/* Tablets (900px wide or less): the two columns become one */
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;   /* the side column moves under the main column */
+    }
+}
+
+/* Phones (600px wide or less) */
+@media (max-width: 600px) {
+    .site-header { padding: 14px 12px 0; }      /* less space at the edges */
+    .container { padding: 14px 12px 32px; }
+    .motto { display: none; }                   /* hides the motto to save space */
+
+    .tool-tabs { gap: 4px; }
+    .tool-tab {
+        flex: 1;               /* each tab takes half the width */
+        align-items: center;   /* centers the text in each tab */
+        padding: 8px 0 10px;
     }
 
-    .nav-links {
-        display: none;            /* HIDES the tabs until the button is tapped */
-        flex-direction: column;   /* when shown, stacks the tabs top to bottom */
-        position: absolute;       /* floats the menu over the page... */
-        top: 100%;                /* ...starting right below the header */
-        left: 0;                  /* stretches from the left edge... */
-        right: 0;                 /* ...to the right edge */
-        background-color: white;
-        padding: 10px 20px;
-    }
-
-    .nav-links.open {
-        display: flex;   /* when JavaScript adds the "open" class, the menu appears */
-    }
-
-    .card-grid {
-        grid-template-columns: 1fr;   /* ONE column on phones, so the cards stack */
-    }
+    .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* exercise route: 4 columns become 2 */
+    .grid-3 { gap: 6px; }
+    .card { padding: 16px; }
 }

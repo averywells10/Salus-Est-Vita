@@ -3,35 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workouts | Salus est Vita</title>
+    <title>Mars · Train | Salus est Vita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- Same head as every page: settings, tab title, fonts, and the stylesheet. -->
 </head>
-<body>
-    <header class="site-header">
-        <a href=" "indec.html" class="logo">Salus est Vita</a>
-        <button class=""menu-button" id="menu-button">&#9776; </button>
-        <nav class="nav-links" id="nav-links">
-        <!-- <nav> holds the main navigation tabs. -->
 
-            <a href="index.html">Home</a>
-            <a href="workouts.html">Workouts</a>
-            <a href="food.html">Food</a>
-            <a href="login.html">Log In</a>
+<body class="page-mars">
+    <!-- "page-mars" labels this as a Mars page. CSS uses it to make the accent color blue. -->
+
+    <!-- ===== HEADER (same on every page; only the "active" tab changes) ===== -->
+    <header class="site-header">
+        <div class="header-top">
+            <a href="index.html" class="logo">SALUS</a>
+            <div class="header-right">
+                <span class="motto">Salus est Vita</span>
+                <nav class="nav-links"><a href="login.html">Log In</a></nav>
+            </div>
+        </div>
+        <nav class="tool-tabs" aria-label="Tools">
+            <a href="workouts.html" class="tool-tab active" aria-current="page">
+                <!-- "active" = the tab you're on. CSS makes it light so it looks attached to the page.
+                     aria-current tells screen readers this is the current page. -->
+                <span class="tool-name">MARS</span>
+                <span class="tool-sub">Train</span>
+            </a>
+            <a href="food.html" class="tool-tab">
+                <span class="tool-name">CERES</span>
+                <span class="tool-sub">Nourish</span>
+            </a>
         </nav>
     </header>
 
-    <main>
-        <h1>Workouts</h1>
+    <main class="container">
 
-        <section class="card">
-            <h2>Log an Exercise</h2>
-            <!-- Workout form goes here -->
-        </section>
+        <!-- ===== SECTION PILLS: rounded buttons for the parts of Mars ===== -->
+        <nav class="section-pills" aria-label="Mars sections">
+            <a href="workouts.html" class="active">Today</a>
+            <!-- "active" fills in the pill you're on. -->
+            <a href="#">Plans</a>
+            <!-- href="#" is a placeholder link. Replace it when you build that page. -->
+            <a href="#">Exercises</a>
+            <a href="#">Progress</a>
+            <a href="#">History</a>
+        </nav>
 
-        <section class="card">
-            <h2>Today's Workout</h2>
-            <!-- Workout list goes here -->
-        </section>
+        <div class="layout">
+            <!-- "layout" = two columns on laptops (wide left, narrow right). On tablets and phones they stack. -->
+
+            <!-- ===== MAIN COLUMN (left) ===== -->
+            <div class="column">
+                <!-- "column" stacks the boxes inside it with even spacing. -->
+
+                <!-- BOX 1: TODAY'S SESSION
+                     FUNCTION LATER: load today's workout name and its list of exercises.
+                     "End session" saves the workout and resets the page. -->
+                <section class="card" id="session-card">
+                    <!-- id = this box's unique name, so JavaScript can find it. -->
+
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+                        <!-- A row: title on the left, button on the right. flex-wrap lets the button drop down on small screens. -->
+                        <div>
+                            <p class="eyebrow" id="session-time">Today</p>
+                            <!-- "eyebrow" = small gray capital text above a heading. Will show the date and time. -->
+                            <h1 id="session-name">Push Day</h1>
+                            <!-- The workout's name. Has an id because JavaScript will change it. -->
+                        </div>
+                        <button class="btn btn-outline" id="end-session">End session</button>
+                        <!-- Outline button: blue border, no fill. -->
+                    </div>
+
+                    <!-- EXERCISE ROUTE: one item per exercise, in order (sample content for now) -->
+                    <ol class="route grid-4" id="session-route">
+                        <!-- <ol> = ordered list, because exercises happen in order. "grid-4" = 4 columns. -->
+                        <li class="done"><span class="route-bar"></span><strong>Bench Press</strong><span class="muted">3 of 3 sets</span></li>
+                        <!-- class "done" makes this bar blue (finished). -->
+                        <li class="now"><span class="route-bar"></span><strong>Overhead Press</strong><span class="muted">Now</span></li>
+                        <!-- class "now" makes this bar gold (current exercise). -->
+                        <li><span class="route-bar"></span><strong>Dips</strong><span class="muted">3 sets</span></li>
+                        <!-- No class = gray bar (not started). -->
+                        <li><span class="route-bar"></span><strong>Cable Fly</strong><span class="muted">3 sets</span></li>
+                    </ol>
+                </section>
+
+                <!-- BOX 2: CURRENT EXERCISE
+                     FUNCTION LATER: show the exercise you're on, its sets as tiles,
+                     the -/+ buttons change weight and reps, and "Log set" saves the set
+                     to the workout_log table in Supabase. -->
+                <section class="card" id="current-exercise">
+                    <p class="eyebrow">Now</p>
+                    <h2 id="exercise-name">Overhead Press</h2>
+                    <p class="muted" id="exercise-last">Last time: 40 lb × 10, 10, 9</p>
+                    <!-- Will show what you lifted last time, pulled from workout_log. -->
+
+                    <!-- SET TILES: one box per set (sample content for now) -->
+                    <div class="grid-3" id="set-tiles" style="margin: 14px 0;">
+                        <!-- "grid-3" = 3 equal columns. -->
+                        <div class="set-tile done"><p class="set-label">Set 1 · done</p><p class="set-value">40 × 10</p></div>
+                        <!-- "done" = blue tile, a finished set. -->
+                        <div class="set-tile now"><p class="set-label">Set 2 · now</p><p class="set-value">45 × 8</p></div>
+                        <!-- "now" = gold tile, the set you're on. -->
+                        <div class="set-tile"><p class="set-label">Set 3</p><p class="set-value">45 × 8</p></div>
+                        <!-- Plain = dashed outline, a set still to come. -->
+                    </div>
+
+                    <!-- LOGGER: the light blue area with the -/+ buttons -->
+                    <div class="card card-sky">
+                        <!-- "card-sky" = light blue box. -->
+                        <div class="grid-3" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+                            <!-- Overrides the grid to 2 columns: weight on the left, reps on the right. -->
+
+                            <div>
+                                <p class="eyebrow" style="color: var(--ink);">Weight (lb)</p>
+                                <div class="stepper">
+                                    <!-- "stepper" = minus button, number, plus button in a row. -->
+                                    <button type="button" id="weight-down" aria-label="Decrease weight">−</button>
+                                    <!-- type="button" = doesn't submit a form. aria-label gives screen readers a clear name. -->
+                                    <output id="weight-value">45</output>
+                                    <!-- <output> is the HTML tag for a number that changes. -->
+                                    <button type="button" id="weight-up" aria-label="Increase weight">+</button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="eyebrow" style="color: var(--ink);">Reps</p>
+                                <div class="stepper">
+                                    <button type="button" id="reps-down" aria-label="Decrease reps">−</button>
+                                    <output id="reps-value">8</output>
+                                    <button type="button" id="reps-up" aria-label="Increase reps">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-gold btn-full" id="log-set" style="margin-top: 14px;">Log set</button>
+                        <!-- The main action. "btn-full" = full width. Will save the set to Supabase. -->
+                    </div>
+                </section>
+
+                <!-- BOX 3: ADD EXERCISE
+                     FUNCTION LATER: open a search of exercises and add one to today's session. -->
+                <button class="btn btn-dashed" id="add-exercise">+ Add an exercise</button>
+                <!-- Dashed border shows "you can add something here." -->
+            </div>
+
+            <!-- ===== SIDE COLUMN (right) ===== -->
+            <aside class="column">
+                <!-- <aside> = side content that supports the main column. -->
+
+                <!-- BOX 4: REST TIMER
+                     FUNCTION LATER: start counting down after "Log set"; +30s adds time; Skip stops it. -->
+                <section class="card card-blue" id="rest-timer">
+                    <p class="eyebrow">Rest</p>
+                    <p id="timer-display" style="margin: 4px 0 12px; font-size: 2.8rem; font-weight: 700;">1:30</p>
+                    <!-- The countdown. JavaScript will update this every second. -->
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-blue" id="timer-add" style="flex: 1; background: var(--lapis-soft);">+30s</button>
+                        <!-- flex: 1 makes both buttons the same width. -->
+                        <button class="btn btn-gold" id="timer-skip" style="flex: 1;">Skip</button>
+                    </div>
+                </section>
+
+                <!-- BOX 5: THIS WEEK
+                     FUNCTION LATER: check workout_log for each day this week and mark trained days. -->
+                <section class="card" id="week-view">
+                    <h3 style="margin-bottom: 12px;">This week</h3>
+                    <div class="week">
+                        <!-- "week" = 7 equal columns, one per day. -->
+                        <div><span class="day-dot done">✓</span>M</div>
+                        <!-- "done" = blue circle with a check (trained that day). -->
+                        <div><span class="day-dot"></span>T</div>
+                        <!-- Plain = empty light blue circle (no workout). -->
+                        <div><span class="day-dot done">✓</span>W</div>
+                        <div><span class="day-dot"></span>T</div>
+                        <div><span class="day-dot"></span>F</div>
+                        <div><span class="day-dot"></span>S</div>
+                        <div><span class="day-dot"></span>S</div>
+                    </div>
+                </section>
+
+                <!-- BOX 6: SALUS SUGGESTS
+                     FUNCTION LATER: write a tip based on last session and the user's goal. -->
+                <section class="card card-gold" id="suggestion">
+                    <p class="salus-label">SALUS SUGGESTS</p>
+                    <p style="margin: 0;" id="suggestion-text">Log a few workouts and Salus will start suggesting what to try next.</p>
+                    <!-- Starting message until there's enough data for a real tip. -->
+                </section>
+            </aside>
+        </div>
     </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Salus est Vita · Not medical advice</p>
+    </footer>
+
+    <!-- Scripts, in order: Supabase library, your connection, your page code. -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

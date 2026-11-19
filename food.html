@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceres · Nourish | Salus est Vita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Same head as every page. -->
+</head>
+
+<body class="page-ceres">
+    <!-- "page-ceres" labels this as a Ceres page. CSS switches the accent color to gold. -->
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <div class="header-top">
+            <a href="index.html" class="logo">SALUS</a>
+            <div class="header-right">
+                <span class="motto">Salus est Vita</span>
+                <nav class="nav-links"><a href="login.html">Log In</a></nav>
+            </div>
+        </div>
+        <nav class="tool-tabs" aria-label="Tools">
+            <a href="workouts.html" class="tool-tab">
+                <span class="tool-name">MARS</span>
+                <span class="tool-sub">Train</span>
+            </a>
+            <a href="food.html" class="tool-tab active" aria-current="page">
+                <!-- On this page, "active" is on the Ceres tab instead. -->
+                <span class="tool-name">CERES</span>
+                <span class="tool-sub">Nourish</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <!-- ===== SECTION PILLS + SEARCH (one row on laptops; the search drops below on phones) ===== -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+            <nav class="section-pills" aria-label="Ceres sections">
+                <a href="food.html" class="active">Today</a>
+                <!-- On Ceres, the active pill is gold because of "page-ceres". -->
+                <a href="#">Saved meals</a>
+                <a href="#">Trends</a>
+                <a href="#">Goals</a>
+            </nav>
+
+            <!-- BOX 1: FOOD SEARCH
+                 FUNCTION LATER: search USDA foods through the Supabase food-search function
+                 and show results to add to a meal. -->
+            <form id="food-search-form" role="search" style="flex: 0 1 380px;">
+                <!-- A form, so pressing Enter runs the search. role="search" tells screen readers what it is. -->
+                <label for="food-query" class="visually-hidden">Search foods</label>
+                <!-- Every input needs a label for accessibility. "visually-hidden" hides it on screen
+                     because the placeholder text already explains the box. -->
+                <input type="search" id="food-query" class="search-box" placeholder="Search USDA foods…">
+                <!-- placeholder = gray hint text that disappears when you type. -->
+            </form>
+        </div>
+
+        <ul id="food-results"></ul>
+        <!-- Empty list where search results will appear. CSS hides it while it's empty. -->
+
+        <!-- BOX 2: DAY SUMMARY
+             FUNCTION LATER: add up today's food_log rows and fill in calories,
+             the progress bar width, and protein / carbs / fat. -->
+        <section class="card" id="day-summary">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px;">
+                <div>
+                    <p class="eyebrow" style="color: var(--bronze);" id="today-date">Today</p>
+                    <!-- Will show today's date. Bronze is the readable version of gold for text. -->
+                    <h1><span id="calories-eaten">0</span> <span class="muted" style="font-size: 1.1rem; font-weight: 500;">of <span id="calories-goal">2,100</span> calories</span></h1>
+                    <!-- Each number has its own span and id so JavaScript can change just that number. -->
+                </div>
+                <p style="margin: 0; font-weight: 700; color: var(--lapis);"><span id="calories-left">2,100</span> left</p>
+            </div>
+
+            <div class="bar" style="margin-top: 14px;"><div class="bar-fill" id="calories-bar" style="width: 0%;"></div></div>
+            <!-- Progress bar: "bar" is the light blue track, "bar-fill" is the gold part.
+                 JavaScript will change width: 0% to match calories eaten, like 64%. -->
+
+            <!-- MACROS: three colored boxes -->
+            <div class="grid-3" style="margin-top: 18px;">
+                <div class="macro" style="background: var(--sky);">
+                    <p><strong>Protein</strong></p>
+                    <p style="font-size: 1.3rem; font-weight: 700;"><span id="protein-eaten">0</span> <span class="muted" style="font-size: 0.9rem;">/ 150 g</span></p>
+                </div>
+                <div class="macro" style="background: var(--honey);">
+                    <p><strong>Carbs</strong></p>
+                    <p style="font-size: 1.3rem; font-weight: 700;"><span id="carbs-eaten">0</span> <span class="muted" style="font-size: 0.9rem;">/ 230 g</span></p>
+                </div>
+                <div class="macro" style="background: #EEF0F5;">
+                    <p><strong>Fat</strong></p>
+                    <p style="font-size: 1.3rem; font-weight: 700;"><span id="fat-eaten">0</span> <span class="muted" style="font-size: 0.9rem;">/ 70 g</span></p>
+                </div>
+                <!-- The goals (150, 230, 70) are placeholders. Later they'll come from the user's profile. -->
+            </div>
+        </section>
+
+        <!-- BOXES 3-6: MEALS
+             FUNCTION LATER: list each meal's foods from food_log; "+ Add food"
+             opens the search and saves the chosen food to that meal. -->
+        <div class="meal-grid">
+            <!-- "meal-grid" = as many columns as fit: 4 on laptops, fewer on smaller screens, 1 on phones. -->
+
+            <section class="card column" id="meal-breakfast">
+                <div style="display: flex; justify-content: space-between;"><h2 style="font-size: 1.15rem;">Breakfast</h2><span class="muted" id="breakfast-calories">0 cal</span></div>
+                <!-- Meal name on the left, that meal's calories on the right. -->
+                <div class="placeholder" id="breakfast-list">No food yet</div>
+                <!-- Dashed box. JavaScript will replace it with the list of foods. -->
+                <button class="btn btn-gold btn-full add-food" data-meal="Breakfast">+ Add food</button>
+                <!-- All four buttons share the class "add-food", so one piece of code handles them all.
+                     data-meal is a custom label JavaScript reads to know WHICH meal was clicked. -->
+            </section>
+
+            <section class="card column" id="meal-lunch">
+                <div style="display: flex; justify-content: space-between;"><h2 style="font-size: 1.15rem;">Lunch</h2><span class="muted" id="lunch-calories">0 cal</span></div>
+                <div class="placeholder" id="lunch-list">No food yet</div>
+                <button class="btn btn-gold btn-full add-food" data-meal="Lunch">+ Add food</button>
+            </section>
+
+            <section class="card column" id="meal-dinner">
+                <div style="display: flex; justify-content: space-between;"><h2 style="font-size: 1.15rem;">Dinner</h2><span class="muted" id="dinner-calories">0 cal</span></div>
+                <div class="placeholder" id="dinner-list">No food yet</div>
+                <button class="btn btn-gold btn-full add-food" data-meal="Dinner">+ Add food</button>
+            </section>
+
+            <section class="card column" id="meal-snacks">
+                <div style="display: flex; justify-content: space-between;"><h2 style="font-size: 1.15rem;">Snacks</h2><span class="muted" id="snacks-calories">0 cal</span></div>
+                <div class="placeholder" id="snacks-list">No food yet</div>
+                <button class="btn btn-gold btn-full add-food" data-meal="Snack">+ Add food</button>
+            </section>
+        </div>
+
+        <!-- BOX 7: SALUS SUGGESTS
+             FUNCTION LATER: a tip that connects today's workout to food (e.g. protein after training). -->
+        <section class="card card-blue" id="suggestion">
+            <p class="salus-label">SALUS SUGGESTS</p>
+            <p style="margin: 0;" id="suggestion-text">Log your meals and workouts, and Salus will connect the two.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Salus est Vita · Not medical advice · Nutrition data: USDA FoodData Central</p>
+        <!-- USDA asks apps to credit them as the data source. -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
