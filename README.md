@@ -4,7 +4,7 @@
 
 Salus est Vita is a free website for tracking workouts and food in one place. Users can log exercises, track meals and macros, and see their progress, on a phone or a computer.
 
-**Live site:** [paste your GitHub Pages link here]
+**Live site:** https://averywells10.github.io/Salus-Est-Vita/
 
 ## Features
 
@@ -35,12 +35,7 @@ Salus est Vita is a free website for tracking workouts and food in one place. Us
 | `login.html` | Log in and sign up |
 | `style.css` | Styles for every page, including the phone layout |
 | `script.js` | Phone menu and page behavior |
-
-## How to run it
-
-1. Clone the repository in VS Code (**Ctrl+Shift+P > Git: Clone**).
-2. Install the **Live Server** extension.
-3. Right-click `index.html` and choose **Open with Live Server**.
+| `supabase.js| Backend for logins and database |
 
 ## Team
 
